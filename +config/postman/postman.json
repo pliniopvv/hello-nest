@@ -65,7 +65,7 @@
 			"response": []
 		},
 		{
-			"name": "update",
+			"name": "editar",
 			"request": {
 				"method": "PATCH",
 				"header": [],
@@ -114,7 +114,7 @@
 			"response": []
 		},
 		{
-			"name": "lista individual",
+			"name": "detalhar",
 			"request": {
 				"method": "GET",
 				"header": [],
