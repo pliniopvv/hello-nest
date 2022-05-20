@@ -11,6 +11,7 @@ export class CoursesService {
       tags: ['Node.JS','Nest.JS']
     }
   ];
+  private idCount: number = 2;
 
   findAll() {
     return this.courses;
@@ -25,7 +26,10 @@ export class CoursesService {
   }
 
   create(courseDto: any) {
-    this.courses.push(courseDto);
+    let course = {id: this.idCount, ...courseDto};
+    this.courses.push(course);
+    this.idCount++;
+    return course;
   }
 
   update(id:number, courseDto: any) {
