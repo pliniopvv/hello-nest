@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/user/entity/user.entity';
+import { log } from 'src/utils/Utils.tools';
+import { jwtConstants } from './Constants';
 
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+const debug_tag = 'auth.service.ts';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+        private jwtService: JwtService) {
     }
 
     async validarUsuario(login: string, senha: string): Promise<any> {
@@ -19,6 +22,14 @@ export class AuthService {
             return result;
         }
         return null;
+    }
+
+    async login(user: any) {
+        log(0,debug_tag,'payload > ', user);
+        const payload = { username: user.username, sub: user.id }
+        return {
+            access_token: this.jwtService.sign(payload, { secret: jwtConstants.secret })
+        }
     }
 
 }
