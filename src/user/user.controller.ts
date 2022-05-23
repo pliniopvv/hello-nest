@@ -18,7 +18,9 @@ export class UserController {
 
     @Post('cadastrar')
     async cadastrar(@Body() data: UserCadastrarDto): Promise<User> {
-        return this.usuarioService.create(data);
+        let user = await this.usuarioService.create(data);
+        user.password = undefined;
+        return user;
     }
 
     @UseGuards(AuthGuard('local'))

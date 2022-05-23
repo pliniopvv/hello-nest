@@ -30,8 +30,8 @@ export class UserService {
 
   async create(dto: any) {
     let user = DtoToUser(dto);
-    let retCourse = await this.dataSource.manager.save(user);
-    return retCourse;
+    let retUser = await this.dataSource.manager.save(user);
+    return retUser;
   }
 
   async update(id: number, dto: any) {
