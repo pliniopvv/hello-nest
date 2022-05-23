@@ -1,46 +1,56 @@
 import { Course } from './entity/course.entity';
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { log } from 'src/utils/Utils.tools';
+import { AppDataSource } from 'src/db/data-source';
+
+let debug_tag = 'courses.services.ts';
 
 @Injectable()
 export class CoursesService {
-  private courses: Course[] = [
-    {
-      id: 1,
-      name: 'Fundamentos do Framework Nest.JS',
-      description: 'Fundamentos do Framework Nest.JS',
-      tags: ['Node.JS','Nest.JS']
-    }
-  ];
-  private idCount: number = 2;
+  private dataSource = AppDataSource;
 
-  findAll() {
-    return this.courses;
+  constructor() {
+    if (!this.dataSource.isInitialized)
+      this.dataSource.initialize().then(() => {
+        log(0, debug_tag, 'Banco de dados inicializado.');
+      });
   }
 
-  findOne(id: number) {
-    let course = this.courses.find(c => c.id == id);
+  async findAll() {
+    return await this.dataSource.manager.find(Course);
+  }
+
+  async findOne(id: number) {
+    let course = await this.dataSource.manager.findOneBy(Course, { id });
     if (!course) {
       throw new HttpException(`Course ID ${id} not found`, HttpStatus.NOT_FOUND);
     }
     return course;
   }
 
-  create(courseDto: any) {
-    let course = {id: this.idCount, ...courseDto};
-    this.courses.push(course);
-    this.idCount++;
-    return course;
+  async create(courseDto: any) {
+    let course = DtoToCourse(courseDto);
+    let retCourse = await this.dataSource.manager.save(course);
+    return retCourse;
   }
 
-  update(id:number, courseDto: any) {
-    let ic = this.courses.findIndex(c => c.id == id);
-    this.courses[ic] = courseDto;
+  async update(id: number, courseDto: any) {
+    let ic: Course = await this.dataSource.manager.findOneBy(Course, { id });
+    ic.name = courseDto.name;
+    ic.tags = courseDto.tags;
+    ic.description = courseDto.description;
+    this.dataSource.manager.save(ic);
   }
 
-  remove(id: number) {
-    let ic = this.courses.findIndex(c => c.id == id);
-    if (ic >= 0) {
-      this.courses.splice(ic,1);
-    }
+  async remove(id: number) {
+    let course = await this.dataSource.manager.findOneBy(Course, { id });
+    return await this.dataSource.manager.remove(course);
   }
+}
+function DtoToCourse(dto: any): Course {
+  let course = new Course();
+  course.description = dto.description;
+  course.name = dto.name;
+  course.tags = dto.tags;
+  return course;
 }
