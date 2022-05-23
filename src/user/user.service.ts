@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AppDataSource } from 'src/db/data-source';
 import { User } from './entity/user.entity';
+import * as bcrypt from 'bcrypt';
 
 let debug_tag = 'user.service.ts';
 
@@ -30,6 +31,7 @@ export class UserService {
 
   async create(dto: any) {
     let user = DtoToUser(dto);
+    user.password = bcrypt.hashSync(user.password, 8);
     let retUser = await this.dataSource.manager.save(user);
     return retUser;
   }
