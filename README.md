@@ -18,6 +18,11 @@ cd hello-nest        #entra na pasta do projeto criado;
 
 ```powershell
 npm install typeorm sqlite3 mysql dotenv
+#adicionando security
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
 ```
+
+
 
 ###### v1.1

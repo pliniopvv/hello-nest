@@ -9,13 +9,6 @@ let debug_tag = 'courses.services.ts';
 export class CoursesService {
   private dataSource = AppDataSource;
 
-  constructor() {
-    if (!this.dataSource.isInitialized)
-      this.dataSource.initialize().then(() => {
-        log(0, debug_tag, 'Banco de dados inicializado.');
-      });
-  }
-
   async findAll() {
     return await this.dataSource.manager.find(Course);
   }

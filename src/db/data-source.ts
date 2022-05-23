@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { Course } from "src/courses/entity/course.entity";
+import { User } from "src/user/entity/user.entity";
 import { env, log } from "src/utils/Utils.tools"
 import { DataSource } from "typeorm"
 
@@ -11,10 +12,27 @@ let ENV_S = env('ENV_SELECT');
 let DB_SOURCE = env('DB_SOURCE');
 
 // ENTIDADES 
-let entities = [Course];
+let entities = [Course, User];
 log(0, debug_tag, "Entidades cadastradas > ", entities);
 
 log(0, debug_tag, "ENV SELECIONADO > ", ENV_S);
+
+// export class DataSourceAdapter {
+
+//     private static dataSource: DataSource;
+
+//     constructor(dataSource: DataSource = AppDataSource) {
+//             DataSourceAdapter.dataSource = dataSource;
+//     }
+
+//     get get(): DataSource {
+//         return DataSourceAdapter.dataSource;
+//     }
+
+//     set set(dataSource: DataSource) {
+//         DataSourceAdapter.dataSource = dataSource;
+//     }
+// }
 
 let configSelection = null;
 if (ENV_S == ENV_PROD) {
@@ -44,3 +62,8 @@ if (ENV_S == ENV_PROD) {
 }
 
 export const AppDataSource = new DataSource(configSelection);
+
+if (!AppDataSource.isInitialized)
+AppDataSource.initialize().then(() => {
+  log(0, debug_tag, 'Banco de dados inicializado.');
+});
