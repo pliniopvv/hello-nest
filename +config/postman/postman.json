@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "823c3adb-10ce-43b8-b5ad-139d93efd8b9",
-		"name": "nest.js",
+		"_postman_id": "a3c39aa8-8406-4b85-87bf-f0024179a743",
+		"name": "Nest.JS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -168,7 +168,36 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"João Gordo\",\r\n    \"login\": \"jgordo@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"telefone\": \"34999999999\",\r\n    \"cpf\": \"99999999999\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"João Gordo\",\r\n    \"login\": \"jgordoh@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"telefone\": \"34999999999\",\r\n    \"cpf\": \"99999999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar/2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Letícia Magra\",\n    \"login\": \"lmagrah@gmail.com\",\n    \"password\": \"15243\",\n    \"telefone\": \"34999999999\",\n    \"cpf\": \"99999999999\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -192,12 +221,33 @@
 				},
 				{
 					"name": "logar",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"login\": \"jgordo@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+							"raw": "{\r\n    \"username\": \"jgordoh@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
