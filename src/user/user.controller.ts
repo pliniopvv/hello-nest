@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
 import { UserService } from './user.service';
 import { UserCadastrarDto } from './dto/user.cadastrar.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -11,6 +12,7 @@ export class UserController {
     constructor(private readonly usuarioService: UserService,
         private authService: AuthService) { }
 
+    @UseGuards(JwtAuthGuard)
     @Get('listar')
     async listar(): Promise<User[]> {
         return this.usuarioService.findAll()
