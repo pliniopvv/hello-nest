@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { Course } from "src/courses/entity/course.entity";
+import { Token } from "src/token/entity/token.entity";
 import { User } from "src/user/entity/user.entity";
 import { env, log } from "src/utils/Utils.tools"
 import { DataSource } from "typeorm"
@@ -12,7 +13,7 @@ let ENV_S = env('ENV_SELECT');
 let DB_SOURCE = env('DB_SOURCE');
 
 // ENTIDADES 
-let entities = [Course, User];
+let entities = [Course, User, Token];
 log(0, debug_tag, "Entidades cadastradas > ", entities);
 
 log(0, debug_tag, "ENV SELECIONADO > ", ENV_S);
