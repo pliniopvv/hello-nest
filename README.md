@@ -23,6 +23,11 @@ npm install --save @nestjs/passport passport passport-local
 npm install --save-dev @types/passport-local
 ```
 
+## Upload File with NestJS
 
+<a href="https://www.youtube.com/watch?v=qPQPsRA9R7Y">Ir para o tutorial</a>
+```powershell
+npm i -D @types/multer
 
+```
 ###### v1.1

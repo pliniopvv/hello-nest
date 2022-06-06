@@ -1,8 +1,9 @@
 import { UpdateCourseDto } from './dto/update-course.dto';
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res } from '@nestjs/common';
+import { Bind, Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
 
 @Controller('/courses')
 export class CoursesController {
@@ -34,5 +35,15 @@ export class CoursesController {
     @Delete(':id')
     delete(@Param('id') id: number) {
         return this.coursesService.remove(id);
+    }
+
+    @Post('upload')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            dest: process.env.UPLOAD_DIR
+        })
+    )
+    uploadFile(@UploadedFile() file) {
+    console.log(file);
     }
 }
