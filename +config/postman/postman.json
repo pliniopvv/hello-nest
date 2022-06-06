@@ -135,6 +135,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/gangss/Documentos/@/Node/hello-nest/+config/postman/postman.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/courses/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"upload"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
